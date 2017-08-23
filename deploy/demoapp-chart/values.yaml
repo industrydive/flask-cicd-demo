@@ -3,16 +3,16 @@
 # Declare variables to be passed into your templates.
 
 # This is an example to show how to override values with extra files and options.
-environment: this-from-the-values-yaml-file
+environment: this-is-from-the-values-yaml-file
 
 replicaCount: 1
 image:
   repository: us.gcr.io/test-cluster-174217/demoapp
   tag: latest
-  pullPolicy: Always
+  pullPolicy: Always # Needed since I'm using the latest tag.
 service:
   name: demoapp-service
-  type: ClusterIP
+  type: LoadBalancer
   externalPort: 80
   internalPort: 5000
 ingress:

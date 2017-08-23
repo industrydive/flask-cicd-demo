@@ -11,5 +11,5 @@ push:
 
 release: |build push
 
-deploy: release
+deploy: |cluster release
 	helm upgrade demoapp-release ./deploy/demoapp-chart --set image.tag=latest -f deploy/custom-values.yaml -i

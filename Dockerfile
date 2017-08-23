@@ -1,6 +1,6 @@
 FROM python:3.6.2-stretch
 
-ENV FLASK_APP=hello.py
+ENV FLASK_APP=/app/hello.py
 
 EXPOSE 5000
 
@@ -12,4 +12,4 @@ RUN pip install -r /app/requirements.txt
 
 COPY . /app
 
-CMD ["flash", "run", "--host=0.0.0.0"]
+CMD ["flask", "run", "--host=0.0.0.0"]
