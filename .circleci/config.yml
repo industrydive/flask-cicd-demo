@@ -1,8 +1,58 @@
 version: 2
 jobs:
-   build:
-     docker:
-       - image: circleci/python:3.6.2
-     steps:
-       - checkout
-       - run: echo "hello world"
+  build:
+    docker:
+      - image: circleci/python:3.6.2
+    steps:
+      - checkout
+      - run:
+          name: Greet the planet
+          command: 'echo "hello world"'
+      - run:
+          name: do a thing
+          command: echo "i am doing a thing"
+  test:
+    docker:
+      - image: circleci/python:3.6.2
+    steps:
+      - checkout
+      - run:
+          name: Test
+          command: echo "this is where i am running a test"
+      - run:
+          name: Make the artifacts
+          command: echo "I am an artifact" > artifact.txt
+      - store_artifacts:
+          path: artifact.txt
+          prefix: artifact-prefix
+  deploy:
+    docker:
+      - image: circleci/python:3.6.2
+    steps:
+      - checkout
+      - run:
+          name: Deploy
+          command: echo "this is the part where I dpeloy."
+
+workflows:
+  version: 2
+  build_and_test_and_deploy:
+    jobs:
+      - build
+      - test:
+          requires:
+            - build
+      - hold:
+          type: approval
+          requires:
+            - build
+            - test
+          filters:
+            branches:
+              only: master
+      - deploy:
+          requires:
+            - hold
+          filters:
+            branches:
+              only: master
