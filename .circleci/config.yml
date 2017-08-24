@@ -32,7 +32,7 @@ jobs:
       - checkout
       - run:
           name: Deploy
-          command: echo "this is the part where I dpeloy."
+          command: echo "this is the part where I deploy."
 
 workflows:
   version: 2
